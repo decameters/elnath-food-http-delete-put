@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>angular HTTP</title>
+    <script src="vendors/angular.js"></script>
+    <script src="scripts/client.js"></script>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body ng-app="RestaurantApp" ng-controller="FoodController as vm">
+    <!-- <p>vm.message: {{vm.message}}</p> -->
+    <!-- prints just the .message -->
+    <h1>angular HTTP</h1>
+    <!-- <p>{{3+9}}</p> -->
+    <!-- does some cool math -->
+    <!-- <p>vm.foodArray: {{vm.foodArray}}</p>
+    prints just the food array -->
+    <h2>food list</h2>
+    <input type="text" ng-model="vm.newFood.name" placeholder="food name">
+    <input type="number" ng-model="vm.newFood.deliciousness_rating" placeholder="deliciousness rating">
+    <label>is it hot?</label>
+    <input type="checkbox" ng-model="vm.newFood.is_hot">
+    <!-- {{vm.newFood}} -->
+    <!-- allows you to see the how it'll input as you type -->
+    <button ng-click="vm.addNewFood(vm.newFood)">submit food</button>
+    <ul>
+        <li ng-repeat="food in vm.foodArray">
+            {{food.name}}
+            <span ng-show="food.is_hot">is really hot</span>
+            <!-- for TRUE -->
+            <span ng-hide="food.is_hot">isn't hot at all</span>
+            <!-- for FALSE -->
+            <!-- ng-show="!food.is_hot" also works for FALSE -->
+            <!-- ng-if="food.is_hot" works for TRUE but it NEVER CREATES THE ELEMENT -->
+            <!-- the ng-show does. so if you had an infinite list, ng-if would be better -->
+            and
+            {{food.deliciousness_rating > 80 ? "is really, really delicious!" : "is fine, I guess."}}
+            <!-- ternary operators are good for basic switches with just two items -->
+        </li>
+            <!-- prints the food list -->
+    </ul>
+</body>
+</html>
