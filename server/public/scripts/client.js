@@ -38,13 +38,23 @@ app.controller('FoodController', ['$http', function ($http){
     }
 
     self.deleteFood = function(foodID){
-        console.log('id clicked is', foodID);
+        console.log('delete id clicked is', foodID);
         
         $http({
             method: 'DELETE',
             url: '/food/' + foodID,
         }).then(function(response){
+            self.getFood();
+        })
+    }
 
+    self.changeFood = function(foodID){
+        console.log('change food id clicked is,', foodID);
+        
+        $http({
+            method: 'PUT',
+            url: '/food/' + foodID
+        }).then(function(response){
             self.getFood();
         })
     }
