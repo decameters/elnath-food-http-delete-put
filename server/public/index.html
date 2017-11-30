@@ -25,23 +25,26 @@
     <!-- {{vm.newFood}} -->
     <!-- allows you to see the how it'll input as you type -->
     <button ng-click="vm.addNewFood(vm.newFood)">submit food</button>
-    <ul>
-        <li ng-repeat="food in vm.foodArray">
-            {{food.name}}
-            <span ng-show="food.is_hot">is really hot</span>
-            <!-- for TRUE -->
+    <hr>
+        <div ng-repeat="food in vm.foodArray">
+            <h3>{{food.name}}</h3>
+            <span ng-show="food.is_hot">is hot</span>
             <span ng-hide="food.is_hot">isn't hot at all</span>
-            <!-- for FALSE -->
-            <!-- ng-show="!food.is_hot" also works for FALSE -->
-            <!-- ng-if="food.is_hot" works for TRUE but it NEVER CREATES THE ELEMENT -->
-            <!-- the ng-show does. so if you had an infinite list, ng-if would be better -->
             and
             {{food.deliciousness_rating > 80 ? "is really, really delicious!" : "is fine, I guess."}}
-            <button ng-click="vm.changeFood(food.id)">change temperature</button>
-            <button ng-click="vm.deleteFood(food.id)">delete food</button>
+            <pre>The SQL id for this food is {{food.id}}.</pre>
+            <pre>The Angular $index for this food is {{$index}}.</pre>
+            <!-- pre tags changes the way it looks and it holds its space -->
+            <!-- used a lot for writing code -->
+            <input type="text" ng-model="food.name" placeholder="food name">
+            <input type="number" ng-model="food.deliciousness_rating" placeholder="deliciousness rating">
+            <label>is it hot?</label>
+            <input type="checkbox" ng-model="food.is_hot">
+            <button ng-click="vm.editFood(food)">save food</button>
+            <button ng-click="vm.deleteFood(food)">delete food</button>
+            <hr>
             <!-- ternary operators are good for basic switches with just two items -->
-        </li>
+        </div>
             <!-- prints the food list -->
-    </ul>
 </body>
 </html>

@@ -42,42 +42,84 @@ router.post('/', function (req, res) {
     })
 });
 
-router.delete('/:id', function (req, res){
-    pool.connect(function (errorConnectingToDatabase, client, done){
-        if (errorConnectingToDatabase){
+router.delete('/:id', function (req, res) {
+    var foodToDeleteId = req.params.id;
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
             console.log('Error connecting to database', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query('DELETE FROM food WHERE id=$1', [req.params.id], function (errorMakingQuery, result){
-            done();
-            if (errorMakingQuery){
-                console.log('Error making query', errorMakingQuery);
-                res.sendStatus(500);
-            } else {
-                res.sendStatus(200);
-            }
+            client.query('DELETE FROM food WHERE id=$1;', [foodToDeleteId], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
             })
         }
     })
-})
+});
 
-router.put('/:id', function (req, res){
-    pool.connect(function (errorConnectingToDatabase, client, done){
-        if (errorConnectingToDatabase){
+router.put('/', function (req, res) {
+    var foodToEdit = req.body;
+    pool.connect(function (errorConnectingToDatabase, client, done) {
+        if (errorConnectingToDatabase) {
             console.log('Error connecting to database', errorConnectingToDatabase);
             res.sendStatus(500);
         } else {
-            client.query('UPDATE food SET is_hot = NOT is_hot WHERE id=$1', [req.params.id], function (errorMakingQuery, result){
-            done();
-            if (errorMakingQuery){
-                console.log('Error making query', errorMakingQuery);
-                res.sendStatus(500);
-            } else {
-                res.sendStatus(200);
-            }
+            client.query(`UPDATE food SET
+            name=$1, deliciousness_rating=$2, is_hot=$3
+            WHERE id=$4;`, [foodToEdit.name, foodToEdit.deliciousness_rating, foodToEdit.is_hot, foodToEdit.id], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
             })
         }
     })
-})
+});
+
+// router.delete('/:id', function (req, res){
+//     pool.connect(function (errorConnectingToDatabase, client, done){
+//         if (errorConnectingToDatabase){
+//             console.log('Error connecting to database', errorConnectingToDatabase);
+//             res.sendStatus(500);
+//         } else {
+//             client.query('DELETE FROM food WHERE id=$1', [req.params.id], function (errorMakingQuery, result){
+//             done();
+//             if (errorMakingQuery){
+//                 console.log('Error making query', errorMakingQuery);
+//                 res.sendStatus(500);
+//             } else {
+//                 res.sendStatus(200);
+//             }
+//             })
+//         }
+//     })
+// })
+
+// router.put('/:id', function (req, res){
+//     pool.connect(function (errorConnectingToDatabase, client, done){
+//         if (errorConnectingToDatabase){
+//             console.log('Error connecting to database', errorConnectingToDatabase);
+//             res.sendStatus(500);
+//         } else {
+//             client.query('UPDATE food SET is_hot = NOT is_hot WHERE id=$1', [req.params.id], function (errorMakingQuery, result){
+//             done();
+//             if (errorMakingQuery){
+//                 console.log('Error making query', errorMakingQuery);
+//                 res.sendStatus(500);
+//             } else {
+//                 res.sendStatus(200);
+//             }
+//             })
+//         }
+//     })
+// })
 
 module.exports = router;

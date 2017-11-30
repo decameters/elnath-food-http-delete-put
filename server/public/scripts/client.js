@@ -37,26 +37,49 @@ app.controller('FoodController', ['$http', function ($http){
         })
     }
 
-    self.deleteFood = function(foodID){
-        console.log('delete id clicked is', foodID);
-        
+    self.deleteFood = function(foodToDelete){
         $http({
             method: 'DELETE',
-            url: '/food/' + foodID,
+            url: '/food/' + foodToDelete.id
         }).then(function(response){
+            console.log('response', response);
             self.getFood();
-        })
-    }
+        });
+    };
 
-    self.changeFood = function(foodID){
-        console.log('change food id clicked is,', foodID);
-        
+    self.editFood = function(foodToEdit){
         $http({
             method: 'PUT',
-            url: '/food/' + foodID
+            url: '/food',
+            data: foodToEdit
         }).then(function(response){
+            console.log('response', response);
             self.getFood();
-        })
-    }
+        });
+    };
+
+    
+
+    // self.deleteFood = function(foodID){
+    //     console.log('delete id clicked is', foodID);
+        
+    //     $http({
+    //         method: 'DELETE',
+    //         url: '/food/' + foodID,
+    //     }).then(function(response){
+    //         self.getFood();
+    //     })
+    // }
+
+    // self.changeFood = function(foodID){
+    //     console.log('change food id clicked is,', foodID);
+        
+    //     $http({
+    //         method: 'PUT',
+    //         url: '/food/' + foodID
+    //     }).then(function(response){
+    //         self.getFood();
+    //     })
+    // }
 
 }]);
