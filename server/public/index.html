@@ -37,6 +37,7 @@
             <!-- the ng-show does. so if you had an infinite list, ng-if would be better -->
             and
             {{food.deliciousness_rating > 80 ? "is really, really delicious!" : "is fine, I guess."}}
+            <button ng-click="vm.deleteFood(food.id)">delete food</button>
             <!-- ternary operators are good for basic switches with just two items -->
         </li>
             <!-- prints the food list -->

@@ -25,8 +25,6 @@ app.controller('FoodController', ['$http', function ($http){
     self.getFood();
 
     self.addNewFood = function(newFood){
-        // self.foodArray.push(self.newFood);
-        // self.newFood = {};
         $http({
             method: 'POST',
             url: '/food',
@@ -35,6 +33,18 @@ app.controller('FoodController', ['$http', function ($http){
             console.log('response', response);
             self.newFood = {is_hot: false};
             // can't reset by VALUE have to reset by REFERENCE
+            self.getFood();
+        })
+    }
+
+    self.deleteFood = function(foodID){
+        console.log('id clicked is', foodID);
+        
+        $http({
+            method: 'DELETE',
+            url: '/food/' + foodID,
+        }).then(function(response){
+
             self.getFood();
         })
     }
